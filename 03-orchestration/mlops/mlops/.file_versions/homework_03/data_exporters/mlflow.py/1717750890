@@ -1,0 +1,46 @@
+import os
+import pickle
+import click
+import mlflow
+
+from pathlib import Path
+from typing import Callable, Dict, Tuple
+from sklearn.base import BaseEstimator
+from mlflow.entities import ViewType
+from mlflow.tracking import MlflowClient
+
+if 'data_exporter' not in globals():
+    from mage_ai.data_preparation.decorators import data_exporter
+
+EXPERIMENT_NAME = "regression-model"
+
+mlflow.set_tracking_uri('sqlite:///mlflow/mlflow.db')
+# mlflow.set_tracking_uri("http://127.0.0.1:5000")
+mlflow.set_experiment(EXPERIMENT_NAME)
+
+@data_exporter
+def register_model(
+    data: Tuple[
+        BaseEstimator, 
+        Dict[str, str]
+    ], 
+    *args, 
+    **kwargs
+):
+    model, dv = data
+    
+    # print('Experiments : ', mlflow.search_experiments())
+    print('Tracking URI : ', mlflow.get_tracking_uri())
+    print('Artifact URI : ',mlflow.get_artifact_uri())
+    mlflow.end_run()
+    # with mlflow.start_run():
+    #     Path("models").mkdir(parents=True, exist_ok=True)
+
+    #     # Save and log the artifact (dict vectorizer)
+    #     with open("models/preprocessor.b", "wb") as f_out:
+    #         pickle.dump(dv, f_out)
+    #     mlflow.log_artifact("models/preprocessor.b", artifact_path="preprocessor")
+        
+    #     # Log model
+    #     mlflow.sklearn.log_model(model, artifact_path="models_mlflow")
+

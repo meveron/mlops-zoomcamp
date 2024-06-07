@@ -1,0 +1,145 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: homework_03/data_loaders/ingest_hw3.py
+  downstream_blocks:
+  - prepare_hw3
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: Ingest hw3
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: ingest_hw3
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: homework_03/transformers/prepare_hw3.py
+  downstream_blocks:
+  - prepare_hw3_bar_chart_j5
+  - build
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: Prepare hw3
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - ingest_hw3
+  uuid: prepare_hw3
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: homework_03/data_exporters/build.py
+  downstream_blocks:
+  - sklearn_hw3
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: Build
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - prepare_hw3
+  uuid: build
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_path: homework_03/transformers/sklearn_hw3.py
+    file_source:
+      path: homework_03/transformers/sklearn_hw3.py
+  downstream_blocks:
+  - mlflow
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: sklearn hw3
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - build
+  uuid: sklearn_hw3
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: homework_03/data_exporters/mlflow.py
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: Mlflow
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - sklearn_hw3
+  uuid: mlflow
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2024-05-31 17:05:07.159817+00:00'
+data_integration: null
+description: null
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: Training pipeline hw3
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: training_pipeline_hw3
+variables_dir: /home/src/mage_data/homework_03
+widgets:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    chart_style: vertical
+    chart_type: bar chart
+    group_by:
+    - duration
+    metrics:
+    - aggregation: count
+      column: duration
+    x: x
+    y: y
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: prepare_hw3_bar chart_j5
+  retry_config: null
+  status: failed
+  timeout: null
+  type: chart
+  upstream_blocks:
+  - prepare_hw3
+  uuid: prepare_hw3_bar_chart_j5

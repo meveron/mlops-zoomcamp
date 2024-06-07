@@ -1,0 +1,27 @@
+import click
+import mlflow
+
+from mlflow.entities import ViewType
+from mlflow.tracking import MlflowClient
+
+if 'data_exporter' not in globals():
+    from mage_ai.data_preparation.decorators import data_exporter
+
+EXPERIMENT_NAME = "regression-model"
+
+
+@data_exporter
+def register_model(
+    data: Tuple[
+        BaseEstimator, 
+        Dict[str, str]
+    ], 
+    *args, 
+    **kwargs
+):
+    model, _ = data
+    
+    client = MlflowClient()
+    
+    with mlflow.start_run():
+
